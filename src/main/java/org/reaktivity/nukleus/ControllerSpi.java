@@ -25,6 +25,20 @@ import org.reaktivity.nukleus.function.MessagePredicate;
 
 public interface ControllerSpi
 {
+    final class Authorization
+    {
+        long authMask;
+        long authExpires;
+
+        public Authorization(
+            long authMask,
+            long authExpires)
+        {
+            this.authMask = authMask;
+            this.authExpires = authExpires;
+        }
+    }
+
     long nextCorrelationId();
 
     int doProcess();
@@ -38,6 +52,18 @@ public interface ControllerSpi
         int length);
 
     CompletableFuture<Void> doUnroute(
+        int msgTypeId,
+        DirectBuffer buffer,
+        int index,
+        int length);
+
+    CompletableFuture<Authorization> doAuthorize(
+        int msgTypeId,
+        DirectBuffer buffer,
+        int index,
+        int length);
+
+    CompletableFuture<Void> doUnauthorize(
         int msgTypeId,
         DirectBuffer buffer,
         int index,
