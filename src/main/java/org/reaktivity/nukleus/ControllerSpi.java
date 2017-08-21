@@ -27,8 +27,8 @@ public interface ControllerSpi
 {
     final class Authorization
     {
-        long authMask;
-        long authExpires;
+        private long authMask;
+        private long authExpires;
 
         public Authorization(
             long authMask,
@@ -36,6 +36,16 @@ public interface ControllerSpi
         {
             this.authMask = authMask;
             this.authExpires = authExpires;
+        }
+
+        public long authMask()
+        {
+            return authMask;
+        }
+
+        public long authExpires()
+        {
+            return authExpires;
         }
     }
 
